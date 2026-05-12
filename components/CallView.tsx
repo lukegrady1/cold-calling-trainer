@@ -25,7 +25,7 @@ export function CallView({ state, dispatch }: Props) {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2 text-sm text-neutral-400">
           <span
-            className={`w-2 h-2 rounded-full ${isPeer ? 'bg-amber-500' : 'bg-emerald-500'} animate-pulse`}
+            className={`w-2 h-2 rounded-full ${isPeer ? 'bg-amber-500' : 'bg-blue-500'} animate-pulse`}
           ></span>
           <span>{isPeer ? "Grader · You're the prospect" : 'Live call'}</span>
         </div>
@@ -37,7 +37,7 @@ export function CallView({ state, dispatch }: Props) {
 
       <div className="h-1 bg-neutral-800 rounded-full overflow-hidden mb-8">
         <div
-          className="h-full bg-emerald-500 transition-all duration-300"
+          className="h-full bg-blue-500 transition-all duration-300"
           style={{ width: `${progress}%` }}
         ></div>
       </div>
@@ -59,11 +59,11 @@ export function CallView({ state, dispatch }: Props) {
       </div>
 
       <div
-        className="bg-gradient-to-br from-emerald-950/40 to-neutral-900 border border-emerald-900/50 rounded-2xl p-5 mb-4 animate-slide-up"
+        className="bg-gradient-to-br from-blue-950/40 to-neutral-900 border border-blue-900/50 rounded-2xl p-5 mb-4 animate-slide-up"
         style={{ animationDelay: '0.1s' }}
       >
         <div className="flex items-center gap-2 mb-3">
-          <div className="text-xs uppercase tracking-wider text-emerald-400 font-semibold">
+          <div className="text-xs uppercase tracking-wider text-blue-400 font-semibold">
             {isPeer ? 'What the caller should hit' : 'Your move'}
           </div>
         </div>
@@ -130,7 +130,7 @@ export function CallView({ state, dispatch }: Props) {
                 disabled={!graded}
                 className={`col-span-3 ${
                   graded
-                    ? 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 shadow-lg shadow-emerald-900/30'
+                    ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700 shadow-lg shadow-blue-900/30'
                     : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
                 } text-white font-semibold py-4 rounded-xl text-lg transition flex items-center justify-center gap-2`}
               >
@@ -159,7 +159,7 @@ export function CallView({ state, dispatch }: Props) {
           <button
             type="button"
             onClick={() => dispatch({ type: 'NEXT' })}
-            className="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2"
           >
             <span>{isLast ? 'End Call' : 'Next'}</span>
             <svg

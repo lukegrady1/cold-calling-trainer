@@ -45,7 +45,7 @@ export function EndView({ state, dispatch }: Props) {
         <div className={`${verdictColor} text-sm font-semibold`}>{verdict}</div>
       </div>
       <div className="flex items-end justify-between mb-4">
-        <div className="text-5xl font-bold text-emerald-400 chip">
+        <div className="text-5xl font-bold text-blue-400 chip">
           {total}
           <span className="text-2xl text-neutral-600">/{max}</span>
         </div>
@@ -98,7 +98,7 @@ export function EndView({ state, dispatch }: Props) {
       <div className="text-xs uppercase tracking-wider text-neutral-500 mb-1">
         Calls practiced today
       </div>
-      <div className="text-4xl font-bold text-emerald-400 chip">{state.callsCompleted}</div>
+      <div className="text-4xl font-bold text-blue-400 chip">{state.callsCompleted}</div>
     </div>
   );
 
@@ -107,7 +107,7 @@ export function EndView({ state, dispatch }: Props) {
       <button
         type="button"
         onClick={() => dispatch({ type: 'START_CALL' })}
-        className="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-emerald-900/30 mb-3"
+        className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-blue-900/30 mb-3"
       >
         Run Again
       </button>
@@ -125,7 +125,7 @@ export function EndView({ state, dispatch }: Props) {
     <div className="flex-1 flex items-start sm:items-center justify-center px-4 sm:px-6 py-8 sm:py-12 animate-fade-in">
       <div className={`${detailOpen ? 'max-w-5xl' : 'max-w-md'} w-full`}>
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-500/10 border border-blue-500/30 mb-4">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -133,7 +133,7 @@ export function EndView({ state, dispatch }: Props) {
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-10 h-10 text-emerald-400"
+              className="w-10 h-10 text-blue-400"
             >
               <path d="M20 6 9 17l-5-5" />
             </svg>

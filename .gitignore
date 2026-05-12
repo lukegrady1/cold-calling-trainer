@@ -30,3 +30,9 @@ next-env.d.ts
 # editors
 .vscode/
 .idea/
+
+# stray macOS / browser-downloaded assets at repo root
+/android-chrome-*.png
+/apple-touch-icon*.png
+/favicon-*.png
+/site.webmanifest

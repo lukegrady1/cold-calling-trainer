@@ -1,6 +1,7 @@
 'use client';
 
 import { DIFFICULTY } from '@/lib/constants';
+import { basePath } from '@/lib/basePath';
 import type { Action, State } from '@/lib/reducer';
 import type { DifficultyKey, Mode, Role } from '@/lib/types';
 
@@ -13,18 +14,14 @@ export function StartScreen({ state, dispatch }: Props) {
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-12 animate-fade-in">
       <div className="max-w-md w-full text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-lg shadow-emerald-900/40 mb-6">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-8 h-8 text-white"
-          >
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-          </svg>
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl overflow-hidden shadow-lg shadow-blue-900/40 mb-6">
+          <img
+            src={`${basePath}/logo.png`}
+            alt="GD logo"
+            className="w-full h-full object-cover"
+            width={80}
+            height={80}
+          />
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-3">Cold Calling Trainer</h1>
         <p className="text-neutral-400 mb-8 leading-relaxed">
@@ -47,7 +44,7 @@ export function StartScreen({ state, dispatch }: Props) {
                   onClick={() => dispatch({ type: 'SET_MODE', mode: m })}
                   className={`px-4 py-3 rounded-lg border text-left transition ${
                     active
-                      ? 'bg-emerald-600/20 border-emerald-500 text-white'
+                      ? 'bg-blue-600/20 border-blue-500 text-white'
                       : 'bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
                   }`}
                 >
@@ -71,7 +68,7 @@ export function StartScreen({ state, dispatch }: Props) {
                     onClick={() => dispatch({ type: 'SET_DIFFICULTY', difficulty: key })}
                     className={`px-4 py-1.5 text-sm rounded-md transition ${
                       state.difficulty === key
-                        ? 'bg-emerald-600 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'text-neutral-400 hover:text-white'
                     }`}
                   >
@@ -100,7 +97,7 @@ export function StartScreen({ state, dispatch }: Props) {
                     caller: {
                       title: "I'm the Caller",
                       sub: 'Make the call, follow your cues',
-                      activeClass: 'bg-emerald-600/20 border-emerald-500 text-white',
+                      activeClass: 'bg-blue-600/20 border-blue-500 text-white',
                     },
                   };
                   return (
@@ -149,22 +146,22 @@ export function StartScreen({ state, dispatch }: Props) {
               </div>
             ) : (
               <div className="mb-6 p-4 bg-neutral-900/60 border border-neutral-800 rounded-lg text-left">
-                <div className="text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-2">
+                <div className="text-xs uppercase tracking-wider text-blue-400 font-semibold mb-2">
                   You&apos;re the caller
                 </div>
                 <ul className="text-sm text-neutral-300 space-y-1.5 leading-relaxed">
                   <li>
-                    <span className="text-emerald-400">•</span> Your screen shows the{' '}
+                    <span className="text-blue-400">•</span> Your screen shows the{' '}
                     <span className="font-semibold text-white">cue</span> for each step — what you&apos;re supposed to convey.
                   </li>
                   <li>
-                    <span className="text-emerald-400">•</span> Make the call. Listen to the grader (the prospect) on the phone and respond from the cue.
+                    <span className="text-blue-400">•</span> Make the call. Listen to the grader (the prospect) on the phone and respond from the cue.
                   </li>
                   <li>
-                    <span className="text-emerald-400">•</span> No prospect lines or example wording on your screen — pull it from memory.
+                    <span className="text-blue-400">•</span> No prospect lines or example wording on your screen — pull it from memory.
                   </li>
                   <li>
-                    <span className="text-emerald-400">•</span> Hit Next to move to your next cue whenever you&apos;ve delivered your line.
+                    <span className="text-blue-400">•</span> Hit Next to move to your next cue whenever you&apos;ve delivered your line.
                   </li>
                 </ul>
               </div>
@@ -175,14 +172,14 @@ export function StartScreen({ state, dispatch }: Props) {
         <button
           type="button"
           onClick={() => dispatch({ type: 'START_CALL' })}
-          className="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-emerald-900/30"
+          className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-blue-900/30"
         >
           Start Call
         </button>
 
         {state.callsCompleted > 0 && (
           <div className="mt-6 text-sm text-neutral-500">
-            <span className="text-emerald-400 font-semibold">{state.callsCompleted}</span> call
+            <span className="text-blue-400 font-semibold">{state.callsCompleted}</span> call
             {state.callsCompleted === 1 ? '' : 's'} practiced today
           </div>
         )}

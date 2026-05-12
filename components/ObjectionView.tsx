@@ -118,7 +118,7 @@ export function ObjectionView({ state, dispatch }: Props) {
           <button
             type="button"
             onClick={() => dispatch({ type: 'CONTINUE_AFTER_OBJECTION' })}
-            className="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2"
           >
             <span>{isPeer ? 'Back to call' : 'Continue'}</span>
             <svg

@@ -18,7 +18,7 @@ export function CallerCallView({ state, dispatch }: Props) {
     <div className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 py-6 sm:py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2 text-sm text-neutral-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
           <span>You&apos;re calling · Caller</span>
         </div>
         <div className="text-xs text-neutral-500 chip">
@@ -28,13 +28,13 @@ export function CallerCallView({ state, dispatch }: Props) {
 
       <div className="h-1 bg-neutral-800 rounded-full overflow-hidden mb-8">
         <div
-          className="h-full bg-emerald-500 transition-all duration-300"
+          className="h-full bg-blue-500 transition-all duration-300"
           style={{ width: `${progress}%` }}
         ></div>
       </div>
 
-      <div className="bg-gradient-to-br from-emerald-950/40 to-neutral-900 border border-emerald-900/50 rounded-2xl p-6 sm:p-8 mb-4 animate-slide-up">
-        <div className="text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-4">
+      <div className="bg-gradient-to-br from-blue-950/40 to-neutral-900 border border-blue-900/50 rounded-2xl p-6 sm:p-8 mb-4 animate-slide-up">
+        <div className="text-xs uppercase tracking-wider text-blue-400 font-semibold mb-4">
           Your cue
         </div>
         <div className="text-2xl sm:text-3xl font-semibold text-neutral-100 leading-snug mb-4">
@@ -58,7 +58,7 @@ export function CallerCallView({ state, dispatch }: Props) {
         <button
           type="button"
           onClick={() => dispatch({ type: 'NEXT' })}
-          className="w-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2"
+          className="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold py-4 rounded-xl text-lg transition shadow-lg shadow-blue-900/30 flex items-center justify-center gap-2"
         >
           <span>{isLast ? 'End Call' : 'Next cue'}</span>
           <svg
