@@ -64,26 +64,48 @@ export function validObjectionsForStep(stepId: number | undefined | null): Objec
   return allObjections.filter((o) => o.validSteps.includes(stepId));
 }
 
-function pickObjection(state: State): { objection: Objection; seenObjectionIds: number[] } {
-  const currentStepId = scriptSteps[state.stepIndex].id;
-  let pool = allObjections.filter(
-    (o) => o.validSteps.includes(currentStepId) && !state.seenObjectionIds.includes(o.id)
-  );
-  if (pool.length === 0) {
-    pool = allObjections.filter((o) => o.validSteps.includes(currentStepId));
+function allowedByDifficulty(o: Objection, difficulty: DifficultyKey): boolean {
+  if (o.hardOnly && difficulty !== 'high') return false;
+  return true;
+}
+
+function pickObjection(
+  state: State,
+  opts?: { stepId?: number; excludeId?: number }
+): { objection: Objection; seenObjectionIds: number[] } {
+  const currentStepId = opts?.stepId ?? scriptSteps[state.stepIndex].id;
+  const excludeId = opts?.excludeId;
+  const tries: ((o: Objection) => boolean)[] = [
+    (o) =>
+      o.validSteps.includes(currentStepId) &&
+      !state.seenObjectionIds.includes(o.id) &&
+      o.id !== excludeId &&
+      allowedByDifficulty(o, state.difficulty),
+    (o) =>
+      o.validSteps.includes(currentStepId) &&
+      o.id !== excludeId &&
+      allowedByDifficulty(o, state.difficulty),
+    (o) =>
+      !state.seenObjectionIds.includes(o.id) &&
+      o.id !== excludeId &&
+      allowedByDifficulty(o, state.difficulty),
+    (o) => allowedByDifficulty(o, state.difficulty),
+  ];
+  let pool: Objection[] = [];
+  for (const filter of tries) {
+    pool = allObjections.filter(filter);
+    if (pool.length > 0) break;
   }
-  if (pool.length === 0) {
-    pool = allObjections.filter((o) => !state.seenObjectionIds.includes(o.id));
-  }
-  if (pool.length === 0) {
-    pool = allObjections;
-  }
+  if (pool.length === 0) pool = allObjections;
   const objection = pool[Math.floor(Math.random() * pool.length)];
   return {
     objection,
     seenObjectionIds: [...state.seenObjectionIds, objection.id],
   };
 }
+
+// Hard-mode chance to immediately follow one objection with another.
+const BACK_TO_BACK_CHANCE = 0.35;
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -159,6 +181,7 @@ export function reducer(state: State, action: Action): State {
       };
     }
     case 'CONTINUE_AFTER_OBJECTION': {
+      const justResolved = state.currentObjection;
       const baseReset = {
         ...state,
         currentObjection: null,
@@ -169,12 +192,38 @@ export function reducer(state: State, action: Action): State {
         // peer: objection was a curveball during a step — return to the same step
         return { ...baseReset, screen: 'call' };
       }
-      // solo: objection replaced a step transition, so advance
-      if (state.stepIndex === scriptSteps.length - 1) {
+      // solo: pick the step we resume at. If the objection specified a
+      // continueAtStep, jump there (the rep's response moved the call past
+      // one or more scripted lines). Otherwise advance by one.
+      let nextIndex = state.stepIndex + 1;
+      if (justResolved?.continueAtStep != null) {
+        const targetIdx = scriptSteps.findIndex((s) => s.id === justResolved.continueAtStep);
+        if (targetIdx > state.stepIndex) {
+          nextIndex = targetIdx;
+        }
+      }
+      if (nextIndex >= scriptSteps.length) {
         const next = state.callsCompleted + 1;
         return { ...baseReset, callsCompleted: next, screen: 'end' };
       }
-      return { ...baseReset, stepIndex: state.stepIndex + 1, screen: 'call' };
+      // Hard mode: chance to immediately throw a second objection at the new step
+      if (state.difficulty === 'high' && Math.random() < BACK_TO_BACK_CHANCE) {
+        const nextStepId = scriptSteps[nextIndex].id;
+        const advanced: State = { ...baseReset, stepIndex: nextIndex };
+        const { objection, seenObjectionIds } = pickObjection(advanced, {
+          stepId: nextStepId,
+          excludeId: justResolved?.id,
+        });
+        if (objection.validSteps.includes(nextStepId)) {
+          return {
+            ...advanced,
+            currentObjection: objection,
+            seenObjectionIds,
+            screen: 'objection',
+          };
+        }
+      }
+      return { ...baseReset, stepIndex: nextIndex, screen: 'call' };
     }
     case 'NEXT': {
       const isLast = state.stepIndex === scriptSteps.length - 1;

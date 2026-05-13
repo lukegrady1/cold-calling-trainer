@@ -79,6 +79,11 @@ export function StartScreen({ state, dispatch }: Props) {
             </div>
             <div className="text-xs text-neutral-500 mt-2">
               ~{Math.round(DIFFICULTY[state.difficulty].chance * 100)}% objection chance per step
+              {state.difficulty === 'high' && (
+                <span className="block text-amber-500/80 mt-1">
+                  Hard mode can chain back-to-back objections.
+                </span>
+              )}
             </div>
           </div>
         ) : (

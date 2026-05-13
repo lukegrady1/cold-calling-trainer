@@ -30,11 +30,11 @@ export const scriptSteps: Step[] = [
   {
     id: 4,
     prospectLine: "Yeah we don't have a website.",
-    repPrompt: 'Make the pitch sound low-pressure and self-deprecating. Ask permission to build something.',
+    repPrompt: 'Make the pitch sound low-pressure and self-deprecating. Be assumptive — never ask permission.',
     repExample:
-      "Ok cool, well I don't want to waste your time. Hey, I just graduated college and I've been building websites for a little while now — I'm finally making it official and starting my own little website agency. Right now I'm doing it pretty cheap, only $97 a month, just trying to get a few more clients and some testimonials lined up. Do you mind if I build something out for you to take a look at?",
+      "Ok cool, well I don't want to waste your time. Hey, I just graduated college and I've been building websites for a little while now — I'm finally making it official and starting my own little website agency. Right now I'm doing it pretty cheap, only $97 a month, just trying to get a few more clients and some testimonials lined up. I went ahead and already made the site for you to take a look at over a Google Meet where I can explain how this will help your business.",
     notes:
-      "This framing lowers their guard — you're not 'selling', you're asking for a chance to prove yourself. Recent grad + experienced + cheap-for-testimonials = no threat.",
+      "Never use passive language like 'do you mind if I…' — that gives them an easy 'I do mind, I'm not interested.' Assume the work is already done. Recent grad + experienced + cheap-for-testimonials = no threat.",
   },
   {
     id: 5,

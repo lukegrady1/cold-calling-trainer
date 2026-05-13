@@ -46,6 +46,9 @@ export const objections: Objection[] = [
       "Honestly? Found you on Google. You've got great reviews — that's actually why I'm calling. Figured a business that's clearly doing good work deserves to be found by more people.",
     framing: 'Stay calm. Be honest. Flip it into a compliment.',
     validSteps: [1, 2],
+    // Rep already explained the source (Google reviews), so don't snap back
+    // to the Julie Becker brush-off — jump straight to "so what's this about?"
+    continueAtStep: 3,
   },
   {
     id: 6,

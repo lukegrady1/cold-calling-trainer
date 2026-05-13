@@ -12,6 +12,13 @@ export type Objection = {
   correctResponse: string;
   framing: string;
   validSteps: number[];
+  // If set, the conversation jumps to this step's prospectLine after the
+  // objection resolves (instead of advancing one step). Use when the rep's
+  // response moves the call past one or more scripted lines.
+  continueAtStep?: number;
+  // Only thrown when difficulty is 'high'. Used for aggressive / hostile
+  // prospect variants that would feel out of place in easy/medium mode.
+  hardOnly?: boolean;
 };
 
 export type GradeKey = 'solid' | 'okay' | 'missed';
