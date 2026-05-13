@@ -16,12 +16,54 @@ export function CallerCallView({ state, dispatch }: Props) {
 
   return (
     <div className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 py-6 sm:py-8">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2 text-sm text-neutral-400">
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-          <span>You&apos;re calling · Caller</span>
+      <div className="flex items-center justify-between mb-6 gap-2">
+        <div className="flex items-center gap-1 min-w-0">
+          <button
+            type="button"
+            onClick={() => dispatch({ type: 'GO_TO_START' })}
+            className="p-2 -ml-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
+            aria-label="Back to start"
+            title="Back to start"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: 'BACK' })}
+            disabled={state.stepIndex === 0}
+            className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 disabled:text-neutral-700 disabled:hover:bg-transparent disabled:cursor-not-allowed transition"
+            aria-label="Previous step"
+            title={state.stepIndex === 0 ? 'Already on first step' : 'Previous step'}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2 text-sm text-neutral-400 ml-1 min-w-0">
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse flex-shrink-0"></span>
+            <span className="truncate">You&apos;re calling · Caller</span>
+          </div>
         </div>
-        <div className="text-xs text-neutral-500 chip">
+        <div className="text-xs text-neutral-500 chip flex-shrink-0">
           Step {state.stepIndex + 1} / {total}
         </div>
       </div>

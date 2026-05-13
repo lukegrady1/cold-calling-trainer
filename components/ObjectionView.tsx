@@ -19,24 +19,67 @@ export function ObjectionView({ state, dispatch }: Props) {
 
   return (
     <div className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 py-6 sm:py-8 animate-fade-in">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2 text-sm text-amber-400">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-4 h-4"
+      <div className="flex items-center justify-between mb-6 gap-2">
+        <div className="flex items-center gap-1 min-w-0">
+          <button
+            type="button"
+            onClick={() => dispatch({ type: 'GO_TO_START' })}
+            className="p-2 -ml-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
+            aria-label="Back to start"
+            title="Back to start"
           >
-            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-            <path d="M12 9v4" />
-            <path d="M12 17h.01" />
-          </svg>
-          <span className="font-semibold uppercase tracking-wider text-xs">Objection incoming</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: 'DISMISS_OBJECTION' })}
+            className="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
+            aria-label="Skip objection"
+            title="Skip objection (back to call)"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2 text-sm text-amber-400 ml-1 min-w-0">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4 flex-shrink-0"
+            >
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <path d="M12 9v4" />
+              <path d="M12 17h.01" />
+            </svg>
+            <span className="font-semibold uppercase tracking-wider text-xs truncate">
+              Objection incoming
+            </span>
+          </div>
         </div>
-        <div className="text-xs text-neutral-500 chip">
+        <div className="text-xs text-neutral-500 chip flex-shrink-0">
           Step {state.stepIndex + 1} / {scriptSteps.length}
           {isPeer ? ` · ${score}/${max} pts` : ''}
         </div>

@@ -50,10 +50,12 @@ export type Action =
   | { type: 'SET_STREAK'; count: number }
   | { type: 'START_CALL' }
   | { type: 'NEXT' }
+  | { type: 'BACK' }
   | { type: 'REVEAL' }
   | { type: 'GRADE_STEP'; grade: GradeKey }
   | { type: 'GRADE_OBJECTION'; grade: GradeKey }
   | { type: 'THROW_OBJECTION' }
+  | { type: 'DISMISS_OBJECTION' }
   | { type: 'CONTINUE_AFTER_OBJECTION' }
   | { type: 'GO_TO_START' }
   | { type: 'SHOW_STEP_DETAIL'; stepId: number }
@@ -139,13 +141,17 @@ export function reducer(state: State, action: Action): State {
     case 'REVEAL':
       return { ...state, revealed: true };
     case 'GRADE_STEP': {
-      if (state.graded) return state;
       const stepId = scriptSteps[state.stepIndex].id;
+      // Replace any prior grade for this step so going back-and-forward
+      // doesn't double-count.
+      const without = state.scores.filter(
+        (s) => !(s.type === 'step' && s.refId === stepId)
+      );
       return {
         ...state,
         graded: action.grade,
         scores: [
-          ...state.scores,
+          ...without,
           { type: 'step', refId: stepId, grade: action.grade, points: GRADES[action.grade].points },
         ],
       };
@@ -178,6 +184,35 @@ export function reducer(state: State, action: Action): State {
         revealed: false,
         objectionGraded: null,
         screen: 'objection',
+      };
+    }
+    case 'DISMISS_OBJECTION': {
+      return {
+        ...state,
+        currentObjection: null,
+        revealed: false,
+        objectionGraded: null,
+        screen: 'call',
+      };
+    }
+    case 'BACK': {
+      if (state.stepIndex === 0) return state;
+      const prevStepIndex = state.stepIndex - 1;
+      const prevStepId = scriptSteps[prevStepIndex].id;
+      // Restore the graded marker for the step we're returning to (peer mode)
+      // so the UI reflects whether it was already graded.
+      const prevStepScore = state.scores.find(
+        (s) => s.type === 'step' && s.refId === prevStepId
+      );
+      return {
+        ...state,
+        stepIndex: prevStepIndex,
+        graded: prevStepScore?.grade ?? null,
+        // Drop any lingering objection state — back navigates from a step view.
+        currentObjection: null,
+        revealed: false,
+        objectionGraded: null,
+        screen: 'call',
       };
     }
     case 'CONTINUE_AFTER_OBJECTION': {
